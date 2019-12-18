@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActionSheetIOS, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { ActionSheetIOS, View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function DailyHeader(props) {
@@ -7,6 +7,7 @@ export default function DailyHeader(props) {
     <View style={Styles.titleContainer}>
       <Text style={Styles.title}>{props.selectedDay ? new Date(props.selectedDay).toDateString() : "Today's Stack"}</Text>
       <TouchableOpacity
+        style={Styles.dotsTouchable}
         onPress={() => {
           ActionSheetIOS.showActionSheetWithOptions(
             {
@@ -17,6 +18,8 @@ export default function DailyHeader(props) {
             (buttonIndex) => {
               if (buttonIndex === 2) {
                 props.navigation.navigate('Item')
+              } else if (buttonIndex === 1) {
+                Alert.alert('Opps', 'Not Available!');
               }
             },
           );
@@ -48,4 +51,8 @@ const Styles = StyleSheet.create({
     marginLeft: 16,
     color: '#222'
   },
+  dotsTouchable: {
+    paddingVertical: 8,
+    paddingLeft: 24,
+  }
 });
