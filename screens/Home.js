@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView } from 'react-native';
+import { View } from 'react-native';
 
 // Components
 import MyAgenda from '../components/MyAgenda';
@@ -13,7 +13,7 @@ export default function Home({ navigation }) {
   const [selectedDay, setSelectedDay] = useState(null);
 
   return (
-    <ScrollView style={HomeStyles.container}>
+    <View style={HomeStyles.container}>
       <MyAgenda
         selectedDay={selectedDay}
         onDayChange={(day) => setSelectedDay(day)} />
@@ -23,7 +23,7 @@ export default function Home({ navigation }) {
         navigation={navigation} />
 
       <DailyList selectedDay={selectedDay} />
-    </ScrollView>
+    </View>
   );
 }
 
