@@ -23,9 +23,9 @@ export default function MyAgenda(props) {
         textDisabledColor: '#d9e1e8',
         dotColor: mainColor,
         selectedDotColor: '#ffffff',
-        arrowColor: mainColor,
+        arrowColor: '#b6c1cd',
         monthTextColor: '#b6c1cd',
-        indicatorColor: mainColor,
+        indicatorColor: 'mainColor',
         textDayFontFamily: 'HelveticaNeue-Bold',
         textMonthFontFamily: 'HelveticaNeue-Bold',
         textMonthFontWeight: '400',
@@ -33,7 +33,7 @@ export default function MyAgenda(props) {
       }}
       markingType={'multi-period'}
       markedDates={MARKET_DATES}
-      hideArrows={true}
+      hideArrows={false}
       hideExtraDays={true}
       horizontal={true}
       pagingEnabled={true}
