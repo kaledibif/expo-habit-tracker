@@ -6,6 +6,7 @@ import { Platform, StatusBar, StyleSheet, View, YellowBox } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import AppNavigator from './navigation/AppNavigator';
+import Layout from './constants/Layout';
 
 YellowBox.ignoreWarnings([
   'Warning: componentWillReceiveProps has been renamed',
@@ -54,6 +55,8 @@ function handleFinishLoading(setLoadingComplete) {
 
 const styles = StyleSheet.create({
   container: {
+    maxWidth: Layout.width,
+    maxHeight: Layout.maxHeight,
     flex: 1,
     backgroundColor: '#fff',
   },
