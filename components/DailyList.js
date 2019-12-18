@@ -1,33 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function DailyList(props) {
-  const [tasks, setTasks] = useState(HABITS);
+export default function DailyList() {
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    setTasks(HABITS);
+  });
 
   return (
     <FlatList
+      scrollEnabled={false}
       data={tasks}
-      renderItem={({ item }) => <Item item={item} />}
-      keyExtractor={item => item.title}
+      renderItem={({ item, index, separators }) => (
+        <TouchableOpacity
+          style={Styles.item}
+          activeOpacity={0.5}
+          onPress={() => {
+            // const updatedItemIndex = tasks.findIndex(task => task.id === updatedItem.id);
+            item.checked = !item.checked;
+            setTasks();
+          }} >
+          <View style={[Styles.dot, {
+            backgroundColor: item.checked
+              ? item.color : 'white', borderColor: item.color
+          }]} />
+          <View style={Styles.flexRow}>
+            <Text style={Styles.text}>{item.title}</Text>
+            <Text style={Styles.rightText}>{item.weeklyRep}/7</Text>
+          </View>
+        </TouchableOpacity>
+      )}
     />
   )
-}
-
-function Item({ item }) {
-  return (
-    <TouchableOpacity
-      style={Styles.item}
-      activeOpacity={0.5}
-      onPress={() => {
-        item.checked = !item.checked;
-      }} >
-      <View style={[Styles.dot, { backgroundColor: item.checked ? item.color : 'white', borderColor: item.color }]} />
-      <View style={Styles.flexRow}>
-        <Text style={Styles.text}>{item.title}</Text>
-        <Text style={Styles.rightText}>{item.weeklyRep}/7</Text>
-      </View>
-    </TouchableOpacity>
-  );
 }
 
 const Styles = StyleSheet.create({
@@ -65,8 +70,9 @@ const Styles = StyleSheet.create({
   },
 });
 
-const HABITS = [
+let HABITS = [
   {
+    id: 1,
     title: 'First Item',
     color: '#0477BF',
     checked: false,
@@ -74,6 +80,7 @@ const HABITS = [
     totalRep: 12,
   },
   {
+    id: 2,
     title: 'Second Item',
     color: '#04BF55',
     checked: true,
@@ -81,6 +88,7 @@ const HABITS = [
     totalRep: 4,
   },
   {
+    id: 3,
     title: 'Third Item',
     color: '#F24405',
     checked: false,
