@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -13,19 +13,20 @@ const StackNavigator = createStackNavigator(
     Home: {
       screen: Home,
       path: '/',
-      navigationOptions: () => ({
+      navigationOptions: ({ navigation }) => ({
         headerStyle: {
           backgroundColor: '#0477BF',
         },
         headerLeft: () => (
-          <Text style={{ fontSize: 17, color: 'white', fontWeight: 'bold', marginLeft: 16, }}>Agenda</Text>
+          <Text style={Styles.leftTitle}>Habit Agenda</Text>
         ),
         headerRight: () => (
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => { navigation.setParams({ setToday: true }) }}>
             <Ionicons
               name="ios-calendar"
               size={26}
-              style={{ marginRight: 18 }}
+              style={Styles.rightTouchable}
               color="white"
             />
           </TouchableOpacity>
@@ -52,5 +53,17 @@ const StackNavigator = createStackNavigator(
     // initialRouteName: 'Item',
   }
 );
+
+const Styles = StyleSheet.create({
+  leftTitle: {
+    fontSize: 17,
+    color: 'white',
+    fontWeight: 'bold',
+    marginLeft: 16,
+  },
+  rightTouchable: {
+    marginRight: 18,
+  },
+});
 
 export default createAppContainer(StackNavigator);

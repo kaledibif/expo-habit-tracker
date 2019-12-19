@@ -1,25 +1,29 @@
 import React, { useState } from 'react';
-import { ActionSheetIOS, View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import {
+  ActionSheetIOS,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function DailyHeader(props) {
   return (
     <View style={Styles.titleContainer}>
-      <Text style={Styles.title}>{props.selectedDay ? new Date(props.selectedDay).toDateString() : "Today's Stack"}</Text>
+      <Text style={Styles.title}>{getHeaderText(props.selectedDay)}</Text>
       <TouchableOpacity
         style={Styles.dotsTouchable}
         onPress={() => {
           ActionSheetIOS.showActionSheetWithOptions(
             {
-              options: ['Cancel', 'All Habits', 'Add New Habit',],
+              options: ['Cancel', 'Add New Habit',],
               // destructiveButtonIndex: 0,
               cancelButtonIndex: 0,
             },
             (buttonIndex) => {
-              if (buttonIndex === 2) {
+              if (buttonIndex === 1) {
                 props.navigation.navigate('Item')
-              } else if (buttonIndex === 1) {
-                Alert.alert('Opps', 'Not Available!');
               }
             },
           );
@@ -33,6 +37,11 @@ export default function DailyHeader(props) {
       </TouchableOpacity>
     </View>
   )
+}
+
+function getHeaderText(selectedDay) {
+  return new Date(selectedDay).toDateString() === new Date().toDateString()
+    ? "Today's Stack" : new Date(selectedDay).toDateString();
 }
 
 const Styles = StyleSheet.create({

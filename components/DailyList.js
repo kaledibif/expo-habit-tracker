@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  FlatList,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native';
 
 export default function DailyList() {
   const [tasks, setTasks] = useState([]);

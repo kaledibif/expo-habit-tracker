@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 
 // Components
 import MyAgenda from '../components/MyAgenda';
@@ -16,7 +16,8 @@ export default function Home({ navigation }) {
     <View style={HomeStyles.container}>
       <MyAgenda
         selectedDay={selectedDay}
-        onDayChange={(day) => setSelectedDay(day)} />
+        onDayChange={(day) => setSelectedDay(day)}
+        navigation={navigation} />
 
       <DailyHeader
         selectedDay={selectedDay}

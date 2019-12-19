@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
 import {
   Text,
-  FlatList,
   View,
   TextInput,
-  SegmentedControlIOS,
-  DatePickerIOS,
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+
+// Styles
 import ItemStyles from '../styles/ItemStyles';
 
-export default function Item() {
-  let today = new Date();
+// Components
+import PeriodPicker from '../components/PeriodPicker';
+import SegmentPicker from '../components/SegmentPicker';
+import ColorPicker from '../components/ColorPicker';
 
+export default function Item() {
   const [name, onNameChange] = useState(null);
-  const [pickDate, setPickDate] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
   const [duration, setDuration] = useState(7);
-  const [startDate, setStartDate] = useState(today);
+  const [repetition, setRepetition] = useState(0);
+  const [color, setColor] = useState('#0477BF');
 
   return (
     <ScrollView style={ItemStyles.container}>
@@ -28,53 +31,17 @@ export default function Item() {
           value={name}
           placeholder={'Habit Name'}
         />
-        <View style={ItemStyles.dateContainer}>
-          <View style={ItemStyles.startDateContainer}>
-            <Text style={ItemStyles.colorText}>Start Date</Text>
-            <TouchableOpacity onPress={() => { setPickDate(!pickDate) }}>
-              <Text style={ItemStyles.dateText}>{!pickDate
-                ? startDate.toDateString() == today.toDateString()
-                  ? 'Today' : startDate.toDateString() : 'Set Selected Date'}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={ItemStyles.startDateContainer}>
-            <Text style={ItemStyles.colorText}>Duration</Text>
-            <TouchableOpacity onPress={() => { setDuration(duration === 28 ? 7 : duration + 7) }}>
-              <Text style={ItemStyles.dateText}>{duration} Days</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        {pickDate ? <View style={ItemStyles.datePickerContainer}>
-          <DatePickerIOS
-            date={startDate}
-            mode="date"
-            onDateChange={(date) => {
-              // let myDate = new Date(date);
-              setStartDate(date);
-            }}
-          />
-        </View> : null}
-        <View style={ItemStyles.segmentContainer}>
-          <Text style={ItemStyles.colorText}>Repetition</Text>
-          <SegmentedControlIOS
-            style={ItemStyles.segment}
-            values={['Week Days', 'Weekend', 'All Week']}
-            selectedIndex={0}
-            onChange={(event) => {
-              // this.setState({ selectedIndex: event.nativeEvent.selectedSegmentIndex });
-            }}
-          />
-        </View>
-        <View style={ItemStyles.colorContainer}>
-          <Text style={ItemStyles.colorText}>Color</Text>
-          <FlatList
-            style={ItemStyles.flatList}
-            horizontal
-            data={COLORS}
-            renderItem={({ item }) => <Color item={item} />}
-            keyExtractor={item => item.color}
-          />
-        </View>
+        <PeriodPicker
+          startDate={startDate}
+          updateStartDate={(val) => setStartDate(val)}
+          duration={duration}
+          updateDuration={(val) => setDuration(val)} />
+        <SegmentPicker
+          repetition={repetition}
+          updateRepetition={(val) => setRepetition(val)} />
+        <ColorPicker
+          color={color}
+          updateColor={(val) => setColor(val)} />
         <TouchableOpacity
           style={ItemStyles.button}
           // onPress={() => navigate('HomeScreen')}
@@ -85,47 +52,3 @@ export default function Item() {
     </ScrollView>
   )
 }
-
-Item.navigationOptions = {
-  // title: 'December',
-};
-
-function Color({ item }) {
-  let [color, setColor] = useState(null);
-
-  return (
-    <View style={ItemStyles.item}>
-      <TouchableOpacity style={[ItemStyles.dot,
-      { backgroundColor: item.checked ? item.color : 'white', borderColor: item.color }]}
-        onPress={() => {
-          if (color = item.color) {
-            item.checked = !item.checked
-            setColor(item.color);
-          }
-        }} />
-    </View>
-  );
-}
-
-const COLORS = [
-  {
-    color: '#0477BF',
-    checked: false,
-  },
-  {
-    color: '#0396A6',
-    checked: false,
-  },
-  {
-    color: '#04BF55',
-    checked: false,
-  },
-  {
-    color: '#F2B705',
-    checked: false,
-  },
-  {
-    color: '#F24405',
-    checked: false,
-  },
-];
