@@ -6,18 +6,20 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
+import Habits from '../constants/Habits';
 
 export default function DailyList() {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    setTasks(HABITS);
+    setTasks(Habits);
   });
 
   return (
     <FlatList
       scrollEnabled={false}
       data={tasks}
+      keyExtractor={item => item.title}
       renderItem={({ item, index, separators }) => (
         <TouchableOpacity
           style={Styles.item}
@@ -75,30 +77,3 @@ const Styles = StyleSheet.create({
     color: '#aaa',
   },
 });
-
-let HABITS = [
-  {
-    id: 1,
-    title: 'First Item',
-    color: '#0477BF',
-    checked: false,
-    weeklyRep: 4,
-    totalRep: 12,
-  },
-  {
-    id: 2,
-    title: 'Second Item',
-    color: '#04BF55',
-    checked: true,
-    weeklyRep: 0,
-    totalRep: 4,
-  },
-  {
-    id: 3,
-    title: 'Third Item',
-    color: '#F24405',
-    checked: false,
-    weeklyRep: 2,
-    totalRep: 3,
-  },
-];

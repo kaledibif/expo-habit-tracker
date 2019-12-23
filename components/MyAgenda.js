@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { CalendarList } from 'react-native-calendars';
 import Colors from '../constants/Colors';
+import MarkedDates from '../constants/MarkedDates';
 
 export default function MyAgenda({ navigation, onDayChange }) {
   useEffect(() => {
@@ -18,20 +19,19 @@ export default function MyAgenda({ navigation, onDayChange }) {
       maxDate={Date.now() - 24 * 3600 * 1000}
       monthFormat={'MMMM yyyy'}
       markingType={'multi-period'}
-      markedDates={MARKET_DATES}
+      markedDates={MarkedDates}
       hideArrows={false}
       hideExtraDays={true}
       horizontal={true}
       pagingEnabled={true}
       onDayPress={(day) => {
-        console.warn(day);
         onDayChange(day.dateString)
       }}
       // onVisibleMonthsChange={(months) => { console.warn('now these months are visible', months); }}
       theme={{
-        selectedDayBackgroundColor: Colors.mainColor,
-        todayTextColor: Colors.mainColor,
-        dotColor: Colors.mainColor,
+        selectedDayBackgroundColor: Colors.main,
+        todayTextColor: Colors.main,
+        dotColor: Colors.main,
         backgroundColor: '#ffffff',
         calendarBackground: '#ffffff',
         selectedDayTextColor: '#ffffff',
@@ -51,38 +51,14 @@ export default function MyAgenda({ navigation, onDayChange }) {
   )
 }
 
-const MARKET_DATES = {
-  '2019-12-09': {
-    periods: [
-      { startingDay: true, endingDay: false, color: '#0477BF' },
-      { startingDay: true, endingDay: false, color: '#04BF55' },
-    ]
-  },
-  '2019-12-10': {
-    periods: [
-      { startingDay: false, endingDay: true, color: '#0477BF' },
-      { startingDay: false, endingDay: false, color: '#04BF55' },
-      { startingDay: true, endingDay: false, color: '#F24405' },
-    ]
-  },
-  '2019-12-11': {
-    periods: [
-      { color: 'transparent' },
-      { startingDay: false, endingDay: true, color: '#04BF55' },
-      { startingDay: false, endingDay: true, color: '#F24405' },
-    ]
-  },
-  '2019-12-12': {
-    periods: [
-      { startingDay: true, endingDay: true, color: '#0477BF' },
-    ]
-  },
+function getMarketDays() {
+  return AgendaController.getMonthlyData();
 }
 
 const Styles = StyleSheet.create({
   calendar: {
     borderBottomWidth: 1,
     borderColor: '#eee',
-    height: 330,
+    // height: 330,
   },
 });
